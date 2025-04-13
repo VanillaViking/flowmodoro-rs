@@ -9,6 +9,12 @@ flake-utils.lib.eachDefaultSystem
   let pkgs = nixpkgs.legacyPackages.${system}; in
   {
     devShells.default = import ./shell.nix { inherit pkgs; };
+    packages.default = pkgs.rustPackages.rustPlatform.buildRustPackage {
+      pname = "flowmodoro-rs";
+      version = "0.1.0";
+      src = ./.;
+      cargoLock.lockFile = ./Cargo.lock;
+    };
   }
   );
 }
