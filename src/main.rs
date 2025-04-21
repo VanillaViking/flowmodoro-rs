@@ -11,12 +11,13 @@ fn main() {
     );
 
     termdown.wait().expect("An error occured");
-    let rest = now.elapsed().as_secs() / (60 * 5);
-    println!("Resting for {} minutes...", rest);
+    let rest_m = now.elapsed().as_secs() / (60 * 5);
+    let rest_s = (now.elapsed().as_secs() / 5) % 60;
+    println!("Resting for {}m {}s", rest_m, rest_s);
     sleep(Duration::new(2, 0));
 
     let mut termdown_rest = Command::new("termdown")
-        .arg(format!("{}m", rest))
+        .arg(format!("{}m {}s", rest_m, rest_s))
         .spawn()
         .expect(
         "A problem occured while running termdown. Termdown must be installed to use this program.",
